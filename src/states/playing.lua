@@ -19,7 +19,6 @@ local currentTrack = 0
 local currentlyPlaying = false
 
 function playing:draw()
-  -- currently just draws a mock-up
   love.graphics.setColor(colors.leftBar)
   love.graphics.rectangle("fill", 0, 0, 12, 240 )
 
@@ -55,6 +54,8 @@ function playing:draw()
       love.graphics.rectangle("fill", 65+ (currentTrack * 78), (currentRow + 4) * 10, 22, 10 )
     end
   end
+
+  -- currently just draws a mock-up
 
   love.graphics.setFont(songfont)
 
