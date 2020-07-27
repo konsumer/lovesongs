@@ -7,6 +7,14 @@ local currentRow = 0
 local currentColumn = 0
 local currentTrack = 0
 
+-- track current state of various buttons being up/down for modality
+local inputModals = {
+  a = false,
+  b = false,
+  x = false,
+  y = false
+}
+
 -- dummy pattern for testing
 -- note, instrument, effects
 local patternData = {
@@ -35,24 +43,6 @@ local patternData = {
     {0, 0, 0},
     { 61, 1, 0 },
     {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    { 60, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    { 61, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0}
-  },
-  {
-    { 60, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    { 61, 1, 0 },
-    {0, 0, 0},
     {1, 0, 0},
     {0, 0, 0},
     { 60, 1, 0 },
@@ -65,19 +55,37 @@ local patternData = {
     {0, 0, 0}
   },
   {
-    { 60, 1, 0 },
     {0, 0, 0},
     {0, 0, 0},
     {0, 0, 0},
-    { 61, 1, 0 },
     {0, 0, 0},
     {0, 0, 0},
     {0, 0, 0},
-    { 60, 1, 0 },
     {0, 0, 0},
     {0, 0, 0},
     {0, 0, 0},
-    { 61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
     {0, 0, 0},
     {0, 0, 0},
     {0, 0, 0}
@@ -197,42 +205,85 @@ end
 
 -- handle input
 function playing:pressed(button)
+  if inputModals[button] ~= nil then
+    inputModals[button] = true
+  end
+
   if button == "start" then
-    currentlyPlaying = not currentlyPlaying
+    if inputModals.a then
+    elseif inputModals.b then
+    elseif inputModals.x then
+    elseif inputModals.y then
+    else
+      currentlyPlaying = not currentlyPlaying
+    end
   end
 
   if button == 'left' then
-    if currentColumn ~= 0 then
-    currentColumn = currentColumn - 1
+    if inputModals.a then
+      patternData[currentTrack+1][currentRow+1][1] =  (patternData[currentTrack+1][currentRow+1][1] - 1) % 127
+    elseif inputModals.b then
+    elseif inputModals.x then
+    elseif inputModals.y then
     else
-      currentColumn = 11
+      if currentColumn ~= 0 then
+        currentColumn = currentColumn - 1
+      else
+        currentColumn = 11
+      end
     end
   end
   
   if button == 'right' then
-    if currentColumn ~= 11 then
-      currentColumn = currentColumn + 1
+    if inputModals.a then
+      patternData[currentTrack+1][currentRow+1][1] =  (patternData[currentTrack+1][currentRow+1][1] + 1) % 127
+    elseif inputModals.b then
+    elseif inputModals.x then
+    elseif inputModals.y then
     else
-      currentColumn = 0
+      if currentColumn ~= 11 then
+        currentColumn = currentColumn + 1
+      else
+        currentColumn = 0
+      end
     end
   end
   
   if button == 'up' then
-    if currentRow ~= 0 then
-      currentRow = currentRow - 1
+    if inputModals.a then
+    elseif inputModals.b then
+    elseif inputModals.x then
+    elseif inputModals.y then
     else
-      currentRow = 0xf
+      if currentRow ~= 0 then
+        currentRow = currentRow - 1
+      else
+        currentRow = 0xf
+      end
     end
   end
   
   if button == 'down' then
-    if currentRow ~= 0xf then
-      currentRow = currentRow + 1
+    if inputModals.a then
+    elseif inputModals.b then
+    elseif inputModals.x then
+    elseif inputModals.y then
     else
-      currentRow = 0
+      if currentRow ~= 0xf then
+        currentRow = currentRow + 1
+      else
+        currentRow = 0
+      end
     end
   end
+
   currentTrack = math.floor(currentColumn/3)
+end
+
+function playing:released(button)
+  if inputModals[button] ~= nil then
+    inputModals[button] = false
+  end
 end
 
 return playing
