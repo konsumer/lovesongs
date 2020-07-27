@@ -11,138 +11,129 @@ local currentTrack = 0
 -- note, instrument, effects
 local patternData = {
   {
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {1, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {1, 0, 0},
+    {0, 0, 0},
+    {61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
   },
   {
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
   },
   {
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {1, 0, 0},
+    {0, 0, 0},
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {1, 0, 0},
+    {0, 0, 0}
   },
   {
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xC, 0x01, 0 },
-    nil,
-    nil,
-    nil,
-    { 0xD, 0x01, 0 },
-    nil,
-    nil,
-    nil
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 60, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    { 61, 1, 0 },
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
   }
 }
 
+-- this is the pattern-view, rolled out into array (previous, current, next, from song perspective)
+local songView = {
+  patternData,
+  patternData,
+  patternData
+}
+
+
 -- show 1 screen of pattern
-function displayPattern(pattern, offset)
+function displayPattern(pattern, offset, length)
   if offset == nil then
-    offset = 0
+    offset = 1
   end
-  love.graphics.setFont(songfont)
-  
-  -- previous pattern text
-  love.graphics.setColor(colors.textNotCurrent)
-  love.graphics.print("C ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 0)
-  love.graphics.print("D ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 10)
-  love.graphics.print("E ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 20)
-  love.graphics.print("F ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 30)
+  if length == nil then
+    length = 15
+  end
 
-  local track
-  local t
-  local note
-  local n
+  for n=0,(length-1),1 do
+    -- line number
+    local line = showHex(n % 16, 1)
 
-  -- TODO: need to work out this loop
-  -- for t,track in pairs(patternData) do
-  --   for n,note in pairs(track) do
-  --     if note ~= nil then
-  --       print('track:' .. t .. ' note (' .. n .. '): ' .. note[1] .. ' ' .. note[2] .. ' ' .. note[3])
-  --     else
-  --       print('---')
-  --     end
-  --   end
-  -- end
+    for t in pairs(pattern) do
+      if t == 1 then
+        line = line .. " "
+      else
+        line = line .. "|"
+      end
+      
+      local currentNote = pattern[t][n+1][1]
+      local currentInstrument = pattern[t][n+1][2]
 
+      -- if the instrument is 0, then it's a flow-control message
+      if currentInstrument == 0 then
+        -- 0 note is "nothing here"
+        if currentNote == 0 then
+          line = line .. "-----" .. " -- ---"
+        -- 1 note is "stop playback on this track"
+        elseif currentNote == 1 then
+          line = line .. "•••••" .. " -- ---"
+        end
+      else
+        line = line .. showNote(currentNote) .. showHex(currentInstrument) .. " -- ---"
+      end      
+    end
 
-  -- current pattern text
-  love.graphics.setColor(colors.text)
-  love.graphics.print("0 C-401 -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 40)
-  love.graphics.print("1 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 50)
-  love.graphics.print("2 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 60)
-  love.graphics.print("3 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 70)
-  love.graphics.print("4 ••••• -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 80)
-  love.graphics.print("5 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 90)
-  love.graphics.print("6 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 100)
-  love.graphics.print("7 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 110)
-  love.graphics.print("8 D-401 -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 120)
-  love.graphics.print("9 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 130)
-  love.graphics.print("A ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 140)
-  love.graphics.print("B ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 150)
-  love.graphics.print("C ••••• -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 160)
-  love.graphics.print("D ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 170)
-  love.graphics.print("E ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 180)
-  love.graphics.print("F ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 190)
-
-  -- next pattern text
-  love.graphics.setColor(colors.textNotCurrent)
-  love.graphics.print("0 C-401 -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 200)
-  love.graphics.print("1 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 210)
-  love.graphics.print("2 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 220)
-  love.graphics.print("3 ----- -- ---|----- -- ---|----- -- ---|----- -- ---|----- -- ---", 0, 230)
+    love.graphics.print(line, 0, (offset + n) * 10)
+  end
 end
 
-
+-- called once every draw
 function playing:draw()
   love.graphics.setColor(colors.leftBar)
   love.graphics.rectangle("fill", 0, 0, 6, 240 )
@@ -180,10 +171,22 @@ function playing:draw()
     end
   end
 
-  displayPattern(patternData)
+  -- show a bit of previos & next pattern and all of current
+  love.graphics.setFont(songfont)
+
+  love.graphics.setColor(colors.textNotCurrent)
+  displayPattern(songView[1], 0, 4)
+  
+  love.graphics.setColor(colors.text)
+  displayPattern(songView[2], 4, 16)
+  
+  love.graphics.setColor(colors.textNotCurrent)
+  displayPattern(songView[3], 20, 4)
 end
 
+-- called to update the logical representation of things
 function playing:update(dt)
+  -- increment cursor if playing
   if currentlyPlaying then
     currentRow = currentRow + 1
     if currentRow > 0xf then

@@ -129,13 +129,15 @@ This is basic demo phase. It doesn't really work, but sort of shows how the UI w
 
 ### stage 1
 
-This is basic tracker usability. It should handle all the basic fatures that FT2 or OpenMPT have, but with the contraints above (4/16 patterns.)
+This is basic tracker usability. It should handle all the basic features that FT2 or OpenMPT have, but with the contraints above (4/16 patterns.)
+
 * basic classic mod effects
 * actually play * edit patterns
 * make all the dialogs actually work
 * config files for themes & settings
 * song sequencing that works
 * load/save at very least mod (but XM/IT/S3M will be needed for more tracks and other features)
+* mute/unmute track
 
 
 ### stage 2
@@ -143,12 +145,13 @@ This is basic tracker usability. It should handle all the basic fatures that FT2
 This is where I start to expand on what original xm/s3m/it format can do, and expand beyond what my lil gameboy thing needs. I might not do all of these, just some ideas.
 
 * as many tracks as you like (with scrolling in editor)
-* as many notes in pattern as you like  (with scrolling in editor)
+* as many notes in pattern as you like (with scrolling in editor)
 * mouse/extended-keyboard support, in a special mode (make it more like a classic tracker, if you have peripherals & turn on that mode)
 * higher-resolution support
 * multi-player: several people with joysticks can control different parts (for exmaple set one as "editor" and others as jammers on different instruments)
 * split-screen multiplayer: many players can use a portion of the screen with their own controllers
-* plugins!
+* plugins! Use love, luajit, or patch the built-ins to make it all work the way you want
+* use internet to make lists of plugin & instrument presets (from a central repo) that you can install
 
 #### plugin ideas
 
