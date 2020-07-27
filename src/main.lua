@@ -70,6 +70,11 @@ end
 
 -- this simplifies input into a single callback for keys & gamepad
 function love.gamepadpressed(joystick, button)
+   -- global full-exit on retropie is start+select
+  if joystick and joystick:isGamepadDown('start') and joystick:isGamepadDown('back') then
+    love.event.quit()
+  end
+
   local gs = Gamestate.current()
   if gs.pressed then
     if button == 'dpup' then
@@ -112,6 +117,11 @@ function love.gamepadpressed(joystick, button)
 end
 
 function love.keypressed(key, code)
+  -- global full-exit on retropie is start+select
+  if love.keyboard.isDown('return') and love.keyboard.isDown('escape') then
+    love.event.quit()
+  end
+
   local gs = Gamestate.current()
   if gs.pressed then
     if key == 'up' then
@@ -237,12 +247,7 @@ function love.keyreleased(key, code)
   end
 end
 
-function love.update(dt)
-  -- global full-exit on retropie is start+select
-  if joystick and joystick:isGamepadDown('start') and joystick:isGamepadDown('back') then
-    love.event.quit()
-  end
-  
+function love.update(dt)  
   -- hot-reloading
   if config.hot_reload then
     lurker.update()

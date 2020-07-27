@@ -124,7 +124,7 @@ This is basic demo phase. It doesn't really work, but sort of shows how the UI w
 * dialog for instruments
 * dialog for samples
 * dialog for file load/save song and set BPM
-* denmo pattern/instrument/song/jam modes 
+* demo pattern/instrument/song/jam modes 
 * play/edit
 
 ### stage 1
