@@ -205,6 +205,7 @@ end
 
 -- handle input
 function playing:pressed(button)
+  -- handle modals
   if inputModals[button] ~= nil then
     inputModals[button] = true
   end
@@ -281,6 +282,7 @@ function playing:pressed(button)
 end
 
 function playing:released(button)
+  -- handle modals
   if inputModals[button] ~= nil then
     inputModals[button] = false
   end
