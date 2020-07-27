@@ -9,6 +9,20 @@ StatePlaying = require "states.playing"
 joystick = nil
 songfont = love.graphics.newFont("assets/monoid.ttf", 10)
 
+-- theme
+colors = {
+  leftBar = { 0.4, 0.4, 0.4 },
+  leftBarQuarter = { 0.2, 0.2, 0.2 },
+  text = { 1, 1, 1 },
+  textNotCurrent = { 0.5, 0.5, 0.5 },
+  currentTrack = { 0.1, 0.1, 0.1 },
+  currentItem = { 0.2, 0, 0 },
+  currentRow = { 0.2, 0.2, 0.2 }
+}
+
+-- is it playing?
+currentlyPlaying = false
+
 function love.load()
     love.keyboard.setKeyRepeat(true)
     love.mouse.setVisible(false)

@@ -1,6 +1,6 @@
 # LÖVE Songs
 
-I wanted to make love2d-based mod-tracker for a pi-zero inisde a [gameboy case](http://retroflag.com/GPi-CASE.html). It has a focus on using a joystick (dpad and 8 buttons) to make songs easily on my hardware. Eventually, it will have modern features like realtime effects and midi support. Think "renoise for a tiny screen & joystick.)
+I wanted to make love2d-based mod-tracker for a pi-zero inisde a [gameboy case](http://retroflag.com/GPi-CASE.html). It has a focus on using a joystick (dpad and 8 buttons) to make songs easily on my hardware. Eventually, it will have modern features like realtime effects and midi support. Think "renoise for a tiny screen & joystick." or "lsdj but with modern sampler and effects".
 
 ![screenshot](screenshot.gif)
 
@@ -51,7 +51,7 @@ It will probly seem a bit complicated at first, but once you get the hang of it,
 * in menus, `dpad` `up/down` is for selecting options
 * Press `L`/`R` to swap through different modes (pattern/instrument/song/jam)
 * `start` is global "play" or "edit".
-
+* `select` is global "song" or "pattern" mode.
 
 While playing, you won't hear changes until that part of the sequence is played (so you live-squence stuff a bit ahead of what's currently playing) but in edit mode, you will here it.
 
@@ -62,6 +62,7 @@ If you are playing, you can't edit notes, and the current-line will follow the s
 * If you are editing, `dpad` move selector around the pattern.
 * `B` and `dpad` `up/down` to switch current pattern
 * `B` and `dpad` `left/right` to switch current instrument
+* `A` - add/remove note/silence
 * `A` and `dpad` `up/down` to change note
 * `X` and `dpad` `up/down` to change note, by octave
 * `Y` and `dpad` `up/down` to cycle through effects
@@ -82,7 +83,7 @@ This is where you setup your instruments for sequencing pattern mode.
 
 ## song
 
-This is where you set the order of patterns to be played & chnage the overall mode to pattern (single patterns at a time) or song (play the whole sequence.)
+This is where you set the order of patterns to be played.
 
 ### jam
 
@@ -137,16 +138,23 @@ This is basic tracker usability. It should handle all the basic fatures that FT2
 * load/save at very least mod (but XM/IT/S3M will be needed for more tracks and other features)
 
 
-# stage 2
+### stage 2
 
 This is where I start to expand on what original xm/s3m/it format can do, and expand beyond what my lil gameboy thing needs. I might not do all of these, just some ideas.
 
 * as many tracks as you like (with scrolling in editor)
 * as many notes in pattern as you like  (with scrolling in editor)
-* renoise-like extended effects (ladspa/lv2)
-* midi learn & in/out support
-* midi recording & live-play
 * mouse/extended-keyboard support, in a special mode (make it more like a classic tracker, if you have peripherals & turn on that mode)
 * higher-resolution support
 * multi-player: several people with joysticks can control different parts (for exmaple set one as "editor" and others as jammers on different instruments)
 * split-screen multiplayer: many players can use a portion of the screen with their own controllers
+* plugins!
+
+#### plugin ideas
+
+* scales for inputting patterns
+* generative/arpeggiator sequencing screen (fill currenbt track with notes form persion scale, spaced by 2 notes)
+* pre-made beat patterns to quickly add a beat
+* midi learn & in/out support
+* midi recording & live-play
+* renoise-like extended effects (ladspa/lv2)
