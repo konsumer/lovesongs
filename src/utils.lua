@@ -5,8 +5,7 @@ local StateFileBrowser = require "states.filebrowser"
 fbrowse = {
   title = "",
   onEnd = function(filename) end,
-  glob = "*",
-
+  filter = "All | *.*"
 }
 
 -- print a table, for debugging
@@ -54,8 +53,9 @@ function mountZip(filename, mountpoint)
 end
 
 -- wrapper to show a file dialog
-function showFileBrowser(title, onEnd, glob, location)
-  fbrowse.title = title
+function showFileBrowser(onEnd, title, filter)
   fbrowse.onEnd = onEnd
+  fbrowse.title = title or "Choose a file"
+  fbrowse.filter = filter or "All | *.*"
   Gamestate.switch(StateFileBrowser)
 end

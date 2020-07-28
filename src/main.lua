@@ -1,9 +1,12 @@
+require "lib.lovefs.lovefs"
 lurker = require "lib.lurker.lurker"
 Gamestate = require "lib.hump.gamestate"
 
 require "utils"
 config = require "conf"
 StatePlaying = require "states.playing"
+
+fs = lovefs()
 
 -- theme
 colors = {
@@ -19,6 +22,17 @@ colors = {
 -- is it playing?
 currentlyPlaying = false
 
+-- track current song structure
+currentSong = {}
+currentPattern = {}
+currentInstruments = {}
+
+-- load the song into current memory and switch to edit view
+function songChosen(filename)
+  -- todo: load song here
+  Gamestate.switch(StatePlaying)
+end
+
 function love.load()
   -- only 1 font is currently used
   love.graphics.setFont(love.graphics.newFont("assets/monoid.ttf", 10))
@@ -27,7 +41,7 @@ function love.load()
   love.mouse.setVisible(false)
   local joysticks = love.joystick.getJoysticks()
   Gamestate.registerEvents()
-  Gamestate.switch(StatePlaying)
+  showFileBrowser(songChosen, "Please select a song", "LoveSong | *.lovesong")
 end
 
 -- this simplifies input into a single callback for keys & gamepad
