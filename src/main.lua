@@ -5,9 +5,6 @@ require "utils"
 config = require "conf"
 StatePlaying = require "states.playing"
 
--- setup globals for states to use
-joystick = nil
-
 -- theme
 colors = {
   leftBar = { 0.4, 0.4, 0.4 },
@@ -29,7 +26,6 @@ function love.load()
   love.keyboard.setKeyRepeat(true)
   love.mouse.setVisible(false)
   local joysticks = love.joystick.getJoysticks()
-  joystick = joysticks[1]
   Gamestate.registerEvents()
   Gamestate.switch(StatePlaying)
 end
