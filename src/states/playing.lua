@@ -177,10 +177,7 @@ function playing:draw()
     if currentColumn%3 == 2 then
       love.graphics.rectangle("fill", 65+ (currentTrack * 78), (currentRow + 4) * 10, 22, 10 )
     end
-  end
-
-  -- show a bit of previos & next pattern and all of current
-  love.graphics.setFont(songfont)
+  end  
 
   love.graphics.setColor(colors.textNotCurrent)
   displayPattern(songView[1], 0, 4)

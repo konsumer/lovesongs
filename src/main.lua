@@ -24,12 +24,15 @@ colors = {
 currentlyPlaying = false
 
 function love.load()
-    love.keyboard.setKeyRepeat(true)
-    love.mouse.setVisible(false)
-    local joysticks = love.joystick.getJoysticks()
-    joystick = joysticks[1]
-    Gamestate.registerEvents()
-    Gamestate.switch(StatePlaying)
+  -- only 1 font is currently used
+  love.graphics.setFont(songfont)
+    
+  love.keyboard.setKeyRepeat(true)
+  love.mouse.setVisible(false)
+  local joysticks = love.joystick.getJoysticks()
+  joystick = joysticks[1]
+  Gamestate.registerEvents()
+  Gamestate.switch(StatePlaying)
 end
 
 -- this simplifies input into a single callback for keys & gamepad
