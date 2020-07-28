@@ -3,9 +3,9 @@
 local playing = {}
 
 -- where is the cursor?
-local currentRow = 0
+local currentRow = 1
 local currentColumn = 0
-local currentTrack = 0
+local currentTrack = 1
 currentPattern = 1
 
 -- track current state of various buttons being up/down for modality
@@ -87,24 +87,24 @@ function playing:draw()
   if not currentlyPlaying then
       -- mark current track
     love.graphics.setColor(colors.currentTrack)
-    love.graphics.rectangle("fill", 12 + (currentTrack * 78), 0, 74, 240 )
+    love.graphics.rectangle("fill", 12 + (currentTrack * 77), 0, 74, 240 )
   end
 
   -- mark current row
   love.graphics.setColor(colors.currentRow)
-  love.graphics.rectangle("fill", 0, (currentRow + 4) * 10, 320, 10 )
+  love.graphics.rectangle("fill", 0, (currentRow + 3) * 10, 320, 10 )
 
   -- mark current item
   if not currentlyPlaying then
     love.graphics.setColor(colors.currentItem)
     if currentColumn%3 == 0 then
-      love.graphics.rectangle("fill", 10+ (currentTrack * 78), (currentRow + 4) * 10, 34, 10 )
+      love.graphics.rectangle("fill", 10+ (currentTrack * 77), (currentRow + 3) * 10, 34, 10 )
     end
     if currentColumn%3 == 1 then
-      love.graphics.rectangle("fill", 45+ (currentTrack * 78), (currentRow + 4) * 10, 18, 10 )
+      love.graphics.rectangle("fill", 45+ (currentTrack * 77), (currentRow + 3) * 10, 18, 10 )
     end
     if currentColumn%3 == 2 then
-      love.graphics.rectangle("fill", 65+ (currentTrack * 78), (currentRow + 4) * 10, 22, 10 )
+      love.graphics.rectangle("fill", 65+ (currentTrack * 77), (currentRow + 3) * 10, 22, 10 )
     end
   end  
 
@@ -123,8 +123,8 @@ function playing:update(dt)
   -- increment cursor if playing
   if currentlyPlaying then
     currentRow = currentRow + 1
-    if currentRow > 0xf then
-      currentRow = 0
+    if currentRow > 16 then
+      currentRow = 1
     end
   end
 end
@@ -148,7 +148,7 @@ function playing:pressed(button)
 
   if button == 'left' then
     if inputModals.a then
-      patternData[currentTrack+1][currentRow+1][1] =  (patternData[currentTrack+1][currentRow+1][1] - 1) % 127
+      patternData[currentTrack][currentRow][1] =  (patternData[currentTrack][currentRow][1] - 1) % 127
     elseif inputModals.b then
     elseif inputModals.x then
     elseif inputModals.y then
@@ -163,7 +163,7 @@ function playing:pressed(button)
   
   if button == 'right' then
     if inputModals.a then
-      patternData[currentTrack+1][currentRow+1][1] =  (patternData[currentTrack+1][currentRow+1][1] + 1) % 127
+      patternData[currentTrack][currentRow][1] =  (patternData[currentTrack][currentRow][1] + 1) % 127
     elseif inputModals.b then
     elseif inputModals.x then
     elseif inputModals.y then
@@ -182,10 +182,10 @@ function playing:pressed(button)
     elseif inputModals.x then
     elseif inputModals.y then
     else
-      if currentRow ~= 0 then
+      if currentRow ~= 1 then
         currentRow = currentRow - 1
       else
-        currentRow = 0xf
+        currentRow = 16
       end
     end
   end
@@ -196,10 +196,10 @@ function playing:pressed(button)
     elseif inputModals.x then
     elseif inputModals.y then
     else
-      if currentRow ~= 0xf then
+      if currentRow ~= 16 then
         currentRow = currentRow + 1
       else
-        currentRow = 0
+        currentRow = 1
       end
     end
   end

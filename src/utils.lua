@@ -108,5 +108,6 @@ function loadSong(filename)
       end
     end
   end
+  -- TODO: load samples
   currentPattern = 1
 end
