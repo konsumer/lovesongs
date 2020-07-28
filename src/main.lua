@@ -7,7 +7,6 @@ StatePlaying = require "states.playing"
 
 -- setup globals for states to use
 joystick = nil
-songfont = love.graphics.newFont("assets/monoid.ttf", 10)
 
 -- theme
 colors = {
@@ -25,7 +24,7 @@ currentlyPlaying = false
 
 function love.load()
   -- only 1 font is currently used
-  love.graphics.setFont(songfont)
+  love.graphics.setFont(love.graphics.newFont("assets/monoid.ttf", 10))
     
   love.keyboard.setKeyRepeat(true)
   love.mouse.setVisible(false)
