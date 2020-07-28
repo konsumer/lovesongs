@@ -1,3 +1,5 @@
+globtopattern = require "lib.globtopattern"
+json = require "lib.json"
 lurker = require "lib.lurker.lurker"
 Gamestate = require "lib.hump.gamestate"
 Camera = require "lib.hump.camera"
@@ -29,7 +31,7 @@ currentInstruments = {}
 
 -- load the song into current memory and switch to edit view
 function songChosen(filename)
-  -- todo: load song here
+  loadSong(filename)
   Gamestate.switch(StatePlaying)
 end
 
@@ -41,7 +43,7 @@ function love.load()
   love.mouse.setVisible(false)
   local joysticks = love.joystick.getJoysticks()
   Gamestate.registerEvents()
-  showFileBrowser(songChosen, "Please select a song", "LoveSong | *.lovesong")
+  showFileBrowser(songChosen, function() print("cancelled.") end, "Please select a song", "*.lovesong")
 end
 
 -- this simplifies input into a single callback for keys & gamepad

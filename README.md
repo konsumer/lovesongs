@@ -92,6 +92,10 @@ This mode is for live-triggering samples. You can preset buttion+`dpad` (in a gr
 
 **TODO** lots more to come, here
 
+## file-format
+
+`.lovesong` files are just a zip. extract `demo.lovesong` to check out how they are structured.
+
 ## Development
 
 Run `make` then one of these targets:

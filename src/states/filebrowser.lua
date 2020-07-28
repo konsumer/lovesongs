@@ -2,6 +2,14 @@
 
 local filebrowser = {}
 
+-- set this elsewhere, to update this state
+fbrowse = {
+  title = "Choose a file",
+  onOk = print,
+  onCancel = function() print('canceled') end,
+  filter = "*.*"
+}
+
 local currentDirectory = fs.home
 local currentFiles = {}
 local currentDirs = {}
@@ -11,25 +19,31 @@ local currentSelection = 1
 local camera = Camera(160, 120)
 
 function filebrowser:updateFiles()
+  camera:lookAt(160, 120)
+  currentSelection = 1
   currentFiles = {}
   currentDirs = {}
-  local f
+
+  -- TODO: windows support?
+  if currentDirectory ~= "/" then
+    table.insert(currentDirs, "../")
+  end
+
+  local fglob = globtopattern(fbrowse.filter)
   for f in fs:ls(currentDirectory) do
     if string.sub(f, -1) == '/' then
       table.insert(currentDirs, f)
     else
-      table.insert(currentFiles, f)
+      if string.find(f, fglob) then
+        table.insert(currentFiles, f)
+      end
     end
-  end
-  if currentDirectory ~= "/" then
-    table.insert(currentDirs, 1, "../")
   end
   currentTotal = #currentFiles + #currentDirs
 end
 
 -- called every time this state is entered
 function filebrowser:enter()
-  currentSelection = 1
   filebrowser:updateFiles()
 end
 
@@ -79,14 +93,14 @@ function filebrowser:pressed(button)
   end
   if button == 'a' or button == 'start' then
     if currentSelection > #currentDirs then
-      fbrowse.onEnd(currentDirectory .. '/' .. currentFiles[currentSelection-#currentDirs])
+      fbrowse.onOk(currentDirectory .. '/' .. currentFiles[currentSelection-#currentDirs])
     else
       currentDirectory = currentDirectory .. '/' .. currentDirs[currentSelection]
-      currentSelection = 1
       filebrowser:updateFiles()
     end
   end
   if button == 'b' then
+    fbrowse.onCancel()
   end
 end
 

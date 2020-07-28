@@ -6,6 +6,7 @@ local playing = {}
 local currentRow = 0
 local currentColumn = 0
 local currentTrack = 0
+currentPattern = 1
 
 -- track current state of various buttons being up/down for modality
 local inputModals = {
@@ -15,90 +16,15 @@ local inputModals = {
   y = false
 }
 
--- dummy pattern for testing
--- note, instrument, effects
-local patternData = {
-  {
-    { 60, 1, 0 },
-    {0, 0, 0},
-    {1, 0, 0},
-    {0, 0, 0},
-    { 61, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    { 60, 1, 0 },
-    {0, 0, 0},
-    {1, 0, 0},
-    {0, 0, 0},
-    {61, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0}
-  },
-  {
-    { 60, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    { 61, 1, 0 },
-    {0, 0, 0},
-    {1, 0, 0},
-    {0, 0, 0},
-    { 60, 1, 0 },
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    { 61, 1, 0 },
-    {0, 0, 0},
-    {1, 0, 0},
-    {0, 0, 0}
-  },
-  {
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0}
-  },
-  {
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0},
-    {0, 0, 0}
-  }
-}
-
--- this is the pattern-view, rolled out into array (previous, current, next, from song perspective)
-local songView = {
-  patternData,
-  patternData,
-  patternData
-}
-
+-- holds array of tracks with { note, instrument, volume, effects }
+-- this set initial value, so view doesn't crash
+song = { patterns = {} }
+for t=1,4 do
+  song.patterns[t] = {}
+  for n=1,16 do
+    song.patterns[t][n] = {0, 0, 0, 0}
+  end
+end
 
 -- show 1 screen of pattern
 function displayPattern(pattern, offset, length)
@@ -183,13 +109,13 @@ function playing:draw()
   end  
 
   love.graphics.setColor(colors.textNotCurrent)
-  displayPattern(songView[1], 0, 4)
+  displayPattern(song.patterns[ ((currentPattern - 1) % #song.patterns) + 1 ], 0, 4)
   
   love.graphics.setColor(colors.text)
-  displayPattern(songView[2], 4, 16)
+  displayPattern(song.patterns[currentPattern], 4, 16)
   
   love.graphics.setColor(colors.textNotCurrent)
-  displayPattern(songView[3], 20, 4)
+  displayPattern(song.patterns[ (currentPattern + 1) % #song.patterns ], 20, 4)
 end
 
 -- called to update the logical representation of things
