@@ -42,6 +42,8 @@ function showNote(n)
   return string.format("%s%d", notes[(n % 12)+1], octave)
 end
 
+-- TODO: move these into fs?
+
 -- mounts a real file-location zip-file
 -- https://love2d.org/wiki/love.filesystem.mount
 function mountZip(filename, mountpoint)

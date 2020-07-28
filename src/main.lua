@@ -1,12 +1,11 @@
-require "lib.lovefs.lovefs"
 lurker = require "lib.lurker.lurker"
 Gamestate = require "lib.hump.gamestate"
+Camera = require "lib.hump.camera"
 
+fs = require "fs"
 require "utils"
 config = require "conf"
 StatePlaying = require "states.playing"
-
-fs = lovefs()
 
 -- theme
 colors = {
@@ -16,7 +15,8 @@ colors = {
   textNotCurrent = { 0.5, 0.5, 0.5 },
   currentTrack = { 0.1, 0.1, 0.1 },
   currentItem = { 0.2, 0, 0 },
-  currentRow = { 0.2, 0.2, 0.2 }
+  currentRow = { 0.2, 0.2, 0.2 },
+  background = {0, 0, 0}
 }
 
 -- is it playing?

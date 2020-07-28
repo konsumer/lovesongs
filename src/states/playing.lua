@@ -143,6 +143,9 @@ end
 
 -- called once every draw
 function playing:draw()
+  love.graphics.setColor(colors.background)
+  love.graphics.rectangle("fill", 0, 0, 320, 240 )
+  
   love.graphics.setColor(colors.leftBar)
   love.graphics.rectangle("fill", 0, 0, 6, 240 )
 
