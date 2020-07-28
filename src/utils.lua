@@ -45,7 +45,7 @@ end
 
 -- mounts a real file-location zip-file
 -- https://love2d.org/wiki/love.filesystem.mount
-function openZip(filename, mountpoint)
+function mountZip(filename, mountpoint)
   if mountpoint == mil then
     mountpoint = 'zip'
   end
