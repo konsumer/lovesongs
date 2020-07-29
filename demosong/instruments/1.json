@@ -1,0 +1,45 @@
+{
+  "name": "Boss DR550",
+  "map": [
+    {
+      "sample": "35kick.flac",
+      "loop": false,
+      "keys": [
+        {
+          "key": 60,
+          "tune": 0
+        }
+      ]
+    },
+    {
+      "sample": "36kick.flac",
+      "loop": false,
+      "keys": [
+        {
+          "key": 61,
+          "tune": -1
+        }
+      ]
+    },
+    {
+      "sample": "37rimshot.flac",
+      "loop": false,
+      "keys": [
+        {
+          "key": 62,
+          "tune": -2
+        }
+      ]
+    },
+    {
+      "sample": "38snare.flac",
+      "loop": false,
+      "keys": [
+        {
+          "key": 63,
+          "tune": -3
+        }
+      ]
+    }
+  ]
+}

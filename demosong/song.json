@@ -1,0 +1,14 @@
+{
+  "name": "LÖVE Songs Demo",
+  "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "patterns": [
+    1,
+    2,
+    3,
+    3,
+    2
+  ],
+  "instruments": [
+    1
+  ]
+}

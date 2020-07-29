@@ -12,7 +12,9 @@ run: ## run the current project
 clean: ## delete all output files
 	rm -rf runtime dist
 
-build: dist/$(NAME).love dist/windows/$(NAME).exe dist/macos/$(NAME) ## build distributables for everyone in dist/
+build: dist/$(NAME).love dist/demosong.lovesong dist/windows/$(NAME).exe dist/macos/$(NAME) ## build distributables for everyone in dist/
+
+demo: dist/demosong.lovesong ## create a demo-song from demosong/
 
 runtime/windows:
 	rm -f /tmp/love-windows.zip
@@ -43,6 +45,10 @@ dist/macos/$(NAME): runtime/macos dist/$(NAME).love
 	cp -R $(PWD)/runtime/macos/love.app $(PWD)/dist/macos/$(NAME).app
 	sed -e "s/GAME_NAME/$(NAME)/g" $(PWD)/Info.plist > $(PWD)/dist/macos/$(NAME).app/Contents/Info.plist
 	cp dist/$(NAME).love $(PWD)/dist/macos/$(NAME).app/Contents/Resources/
+
+dist/demosong.lovesong: demosong/** 
+	mkdir -p dist/
+	cd  demosong/ && zip -r ../dist/demosong.lovesong .
 
 # this is sort of specific to my setup
 deploy: dist/$(NAME).love

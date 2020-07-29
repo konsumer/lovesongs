@@ -96,18 +96,8 @@ function loadSong(filename)
     song.patterns[p] = patternCache[pattern] or json.decode(love.filesystem.read("song/patterns/" .. pattern .. ".json"))
     patternCache[pattern] = song.patterns[p]
   end
-  song.instruments = {}
-  for p,pattern in pairs(patternCache) do
-    for t, track in pairs(pattern) do
-      for n, note in pairs(track) do
-        if not song.instruments[ note[2] ] then
-          if note[2] ~= 0 then
-            song.instruments[ note[2] ] = json.decode(love.filesystem.read("song/instruments/" .. note[2] .. ".json"))
-          end
-        end
-      end
-    end
+  for i,instrument in pairs(song.instruments) do
+    song.instruments[i] = json.decode(love.filesystem.read("song/instruments/" .. instrument .. ".json"))
   end
-  -- TODO: load samples
   currentPattern = 1
 end

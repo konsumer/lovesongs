@@ -94,7 +94,7 @@ This mode is for live-triggering samples. You can preset buttion+`dpad` (in a gr
 
 ## file-format
 
-`.lovesong` files are just a zip. extract `demo.lovesong` to check out how they are structured.
+`.lovesong` files are just a zip. I zipped up [demosong](demosong/). [song.json](./demosong/song.json) contains the instruments used, and the patterns, arranged in a song. [instruments/*.json](./demosong/instruments) is the samples and their mappings.
 
 ## Development
 
@@ -105,6 +105,7 @@ help                           show this help
 run                            run the current project
 clean                          delete all output files
 build                          build distributables for everyone in dist/
+demo                           create a demo-song from demosong/
 ```
 
 You will need `love` in your path.
