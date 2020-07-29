@@ -98,6 +98,9 @@ function loadSong(filename)
   end
   for i,instrument in pairs(song.instruments) do
     song.instruments[i] = json.decode(love.filesystem.read("song/instruments/" .. instrument .. ".json"))
+    for m,mapping in pairs(song.instruments[i].map) do
+      song.instruments[i].map[m].audio = love.audio.newSource("song/samples/"..mapping.sample, "stream")
+    end
   end
   currentPattern = 1
 end

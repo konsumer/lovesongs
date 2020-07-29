@@ -1,6 +1,7 @@
 {
   "name": "LÖVE Songs Demo",
   "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "bpm": 120,
   "patterns": [
     1,
     2,

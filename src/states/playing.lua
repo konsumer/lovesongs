@@ -122,9 +122,15 @@ end
 function playing:update(dt)
   -- increment cursor if playing
   if currentlyPlaying then
-    currentRow = currentRow + 1
-    if currentRow > 16 then
-      currentRow = 1
+    local oldRow = currentRow
+    currentRow = (currentRow + 0.25) % 16
+    if oldRow ~= currentRow then
+      for t=1,4 do
+        if song.patterns[currentPattern + 1][t][currentRow] then
+          local note, instrument, volume, effect = song.patterns[currentPattern + 1][t][currentRow]
+          print(t .. ' ' .. note .. ' ' .. instrument)
+        end
+      end
     end
   end
 end
