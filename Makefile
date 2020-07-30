@@ -1,4 +1,4 @@
-NAME=love-game
+NAME=lovesongs
 VERSION=11.3
 
 .PHONY: help run clean
