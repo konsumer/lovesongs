@@ -1,4 +1,5 @@
 --- reusable map for joystiuc & keyboard, for gpi gameby-like pi
+--- this simplifies input into a single callback for keys & gamepad
 
 -- override these
 function input_pressed(button)
@@ -6,7 +7,6 @@ end
 function input_released(button)
 end
 
--- this simplifies input into a single callback for keys & gamepad
 function love.gamepadpressed(joystick, button)
    -- global full-exit on retropie is start+select
   if joystick and joystick:isGamepadDown('start') and joystick:isGamepadDown('back') then
