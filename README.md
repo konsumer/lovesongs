@@ -2,6 +2,10 @@
 
 I wanted to make love2d-based mod-tracker for a pi-zero inisde a [gameboy case](http://retroflag.com/GPi-CASE.html). It has a focus on using a joystick (dpad and 8 buttons) to make songs easily on my hardware. Eventually, it will have modern features like realtime effects and midi support. Think "renoise for a tiny screen & joystick." or "lsdj but with modern sampler and effects".
 
+## DELAYED!
+
+I dug into using libopenmpt, but it seems like it only has player stuff, and no editing functions. I made [lua-openmpt](https://github.com/konsumer/lua-openmpt) for using it in love/lua. The project seems like it's a bit more to chew than I have time for, but I made great progress on the player-part, if anyone is interested in continuing the work.
+
 ![screenshot](screenshot.gif)
 
 I have tested on LÖVE 11.3 (Mysterious Mysteries.) It may work elsewhere, but I haven't tested it.
